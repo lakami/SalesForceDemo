@@ -1,0 +1,46 @@
+public class MyAccountController {
+	public List<Account> accounts{get; set;}
+    
+    public List<Opportunity> opportunities{get; set;}
+    
+    public String selected {
+        get;
+        set;
+    }
+    
+    public List<SelectOption> options {
+        set;
+        get;
+    }
+    
+    public void save(){
+        try{
+            Account a = new Account(Name='Wavy Apps');
+            insert a;
+            
+            sObject o = Database.query('SELECT FIELDS(STANDARD) FROM Opportunity WHERE Id= :selected').get(0);
+            Opportunity copy = (Opportunity)o.clone(false,true);
+            copy.AccountId = a.Id;
+            
+            insert copy;
+        }
+        catch(DmlException e) {
+    		System.debug('An unexpected error has occurred: ' + e.getMessage());
+		}
+        
+    }
+    
+    public MyAccountController(){
+        String name = 'Edge Communications';
+        accounts = Database.query(
+            'SELECT Name, BillingStreet FROM Account WHERE Name = :name');
+        
+        opportunities = Database.query('SELECT FIELDS(STANDARD) FROM Opportunity');
+        
+        options = new List<SelectOption>();
+        for (Opportunity o  : opportunities){
+            options.add(new SelectOption(o.Id, o.Name));
+        }
+        
+    }
+}

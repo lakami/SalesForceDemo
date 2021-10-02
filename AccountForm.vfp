@@ -1,0 +1,23 @@
+<apex:page controller="MyAccountController">
+    <apex:pageBlock title="Zadanie 2">
+        <apex:pageBlockTable value="{!accounts}" var="acc">
+        	<apex:column headerValue="Name">
+            	<apex:outputText value="{!acc.name}"/>   
+            </apex:column>
+            <apex:column headerValue="Address">
+            	<apex:outputText value="{!acc.BillingStreet}"/>  
+            </apex:column>
+        </apex:pageBlockTable>
+    
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Zadanie 3">
+        <apex:form >
+            <apex:selectList value="{!selected}" multiselect="false" size="1" >
+                <apex:selectOptions value="{!options}"/>
+            </apex:selectList>
+            <apex:commandButton action="{!save}" value="Copy Opportunity"/>
+        </apex:form>
+    </apex:pageBlock>
+    
+</apex:page>
